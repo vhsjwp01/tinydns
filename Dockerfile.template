@@ -1,0 +1,9 @@
+FROM lvicdockregp01.ingramcontent.com/ingramcontent/ol_base::GIT_BRANCH::
+
+MAINTAINER Jason W. Plummer <jason.plummer@ingramcontent.com>
+
+# Install 
+RUN 
+
+# Copy test script
+COPY files/elasticsearch_startup.sh /usr/local/bin/
