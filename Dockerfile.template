@@ -1,9 +1,20 @@
-FROM lvicdockregp01.ingramcontent.com/ingramcontent/ol_base::GIT_BRANCH::
+FROM lvicdockregp01.ingramcontent.com/ingramcontent/ol_base:::REPO_DISTRO_VERSION::
 
 MAINTAINER Jason W. Plummer <jason.plummer@ingramcontent.com>
 
-# Install 
-RUN 
+# Copy test script and base repo 
+COPY files/test_dns.sh /usr/local/bin/
+COPY ol_base.repo /etc/yum.repos.d/
 
-# Copy test script
-COPY files/elasticsearch_startup.sh /usr/local/bin/
+# Install 
+RUN yum clean all -y                                                 && \
+    yum install -y elinks git bind-utils                             && \
+    epel_rpm=$(elinks -dump https://dl.fedoraproject.org/pub/epel/ |    \
+    egrep 'https://.*epel-release-latest-::DISTRO_MAJOR_VERSION::' |    \
+    awk '{print $NF}')                                               && \
+    if [ "${epel_rpm}" != "" ]; then                                    \
+        rpm -ihv "${epel_rpm}" ;                                        \
+    fi                                                               && \
+    yum install -y ndjbdns perl-File-Slurp                           && \
+    ln -s /etc/ndjbdns/tinydns.data /etc/ndjbdns/data
+

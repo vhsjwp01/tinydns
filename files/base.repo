@@ -1,4 +1,5 @@
 [::REPO_DISTRO::_::REPO_DISTRO_VERSION::_::REPO_CPU_ARCH::]
+name=::REPO_DISTRO:: ::REPO_DISTRO_VERSION:: - $basearch - Source
 baseurl=http://::REPO_WEB_SERVER::/kickstart/distro/::REPO_DISTRO::/::REPO_DISTRO_VERSION::/os/::REPO_CPU_ARCH::/
 enabled=1
 gpgcheck=0
