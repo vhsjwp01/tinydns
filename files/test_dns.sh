@@ -136,7 +136,7 @@ EOF_CONFIG
         
                 if [ -d "${working_dir}/${scm_repo}" ]; then
                     cd "${working_dir}/${scm_repo}" 
-                    echo "Chceking ${scm_branch} branch of DNS project"
+                    echo "Checking ${scm_branch} branch of DNS project"
                     ${my_git} checkout ${scm_branch} #> /dev/null 2>&1
                     let return_code=${return_code}+${?}
         
@@ -300,10 +300,12 @@ EOF_CONFIG
         
                                         if [ ${return_code} -eq ${SUCCESS} ]; then
                                             # Merge dev branch into master
-                                            git checkout master &&
-                                            echo "    Merging dev into master" &&
+                                            git checkout master                                                &&
+                                            git fetch --all                                                    &&
+                                            git pull --all                                                     &&
+                                            echo "    Merging dev into master"                                 &&
                                             git merge dev -m "BAMBOO: merged vaildated dev branch into master" &&
-                                            echo "    Pushing to master branch on STASH" &&
+                                            echo "    Pushing to master branch on STASH"                       &&
                                             git push --all
                                             let return_code=${return_code}+${?}
                                         fi
