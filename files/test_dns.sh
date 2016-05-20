@@ -299,14 +299,14 @@ EOF_CONFIG
                                         let return_code=${return_code}+${?}
         
                                         if [ ${return_code} -eq ${SUCCESS} ]; then
-                                            # Merge dev branch into master
-                                            git checkout master                                                &&
-                                            git fetch --all                                                    &&
-                                            git pull --all                                                     &&
-                                            echo "    Merging dev into master"                                 &&
-                                            git merge dev -m "BAMBOO: merged vaildated dev branch into master" &&
-                                            echo "    Pushing to master branch on STASH"                       &&
-                                            git push --all
+                                            # Merge ${scm_branch} branch into master
+                                            ${my_git} checkout master                                                                    &&
+                                            ${my_git} fetch --all                                                                        &&
+                                            ${my_git} pull --all                                                                         &&
+                                            echo "    Merging ${scm_branch} into master"                                                 &&
+                                            ${my_git} merge ${scm_branch} -m "BAMBOO: merged vaildated ${scm_branch} branch into master" &&
+                                            echo "    Pushing to master branch on STASH"                                                 &&
+                                            ${my_git} push --all       
                                             let return_code=${return_code}+${?}
                                         fi
 
