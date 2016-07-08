@@ -43,6 +43,12 @@ if [ "${my_uid}" = "root" ]; then
 
         # Populate /root/.ssh/config with useful defaults
         cat > "${ssh_key_dir}/config" << EOF_CONFIG
+Host bitbucket
+  Hostname bitbucket.ingramcontent.com
+  User svcbambdev
+  IdentityFile ~/.ssh/identity
+  StrictHostKeyChecking no
+
 Host stash
   Hostname stash.ingramcontent.com
   User svcbambdev
