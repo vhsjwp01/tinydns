@@ -21,7 +21,7 @@ if [ "${my_uid}" = "root" ]; then
         pubkey_file="${ssh_key_dir}/id_rsa.pub"
         privkey_file="${ssh_key_dir}/id_rsa"
 
-        if [ ! -d "${ssk_key_dir}" ]; then
+        if [ ! -d "${ssh_key_dir}" ]; then
             mkdir -p "${ssh_key_dir}"
             chmod 700 "${ssh_key_dir}"
         fi
