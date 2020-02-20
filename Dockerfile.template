@@ -1,6 +1,6 @@
-FROM lvicdockregp01.ingramcontent.com/ingramcontent/ol_base:::REPO_DISTRO_VERSION::
+FROM <docker registry server hostname>/<docker namespace>/ol_base:::REPO_DISTRO_VERSION::
 
-MAINTAINER Jason W. Plummer <jason.plummer@ingramcontent.com>
+MAINTAINER Jason W. Plummer <vhsjwp01@gmail.com>
 
 # Copy test script and base repo 
 COPY files/test_dns.sh /usr/local/bin/

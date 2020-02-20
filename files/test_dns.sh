@@ -43,15 +43,9 @@ if [ "${my_uid}" = "root" ]; then
 
         # Populate /root/.ssh/config with useful defaults
         cat > "${ssh_key_dir}/config" << EOF_CONFIG
-Host bitbucket
-  Hostname bitbucket.ingramcontent.com
-  User svcbambdev
-  IdentityFile ~/.ssh/identity
-  StrictHostKeyChecking no
-
-Host stash
-  Hostname stash.ingramcontent.com
-  User svcbambdev
+Host github
+  Hostname github.com
+  User <github user name>
   IdentityFile ~/.ssh/identity
   StrictHostKeyChecking no
 
@@ -76,55 +70,55 @@ EOF_CONFIG
             ndjbdns_dir="/etc/ndjbdns"
 
             if [ -d "${ndjbdns_dir}" ]; then
-                icg_dns[0]="172.18.60.53"
-                icg_dns[1]="172.18.68.21"
+                dns_server_ip[0]="172.18.60.53"
+                dns_server_ip[1]="172.18.68.21"
 
-                icg_domain[0]="ingramcontent.com"
-                icg_domain[1]="ingrambook.com"
-                icg_domain[2]="lightningsource.com"
+                dns_domain[0]="dns_domain0.com"
+                dns_domain[1]="dns_domain1.com"
+                dns_domain[2]="dns_domain2.com"
 
                 search_line=""
 
                 target_file="/etc/resolv.conf"
 
-                for icg_dom in ${icg_domain[*]} ; do
+                for dns_dom in ${dns_domain[*]} ; do
 
                     if [ "${search_line}" = "" ]; then
-                        search_line="${icg_dom}"
+                        search_line="${dns_dom}"
                     else
-                        search_line="${search_line} ${icg_dom}"
+                        search_line="${search_line} ${dns_dom}"
                     fi
 
                 done
 
                 echo "search ${search_line}" > "${target_file}"
 
-                for icg_ns in ${icg_dns[*]} ; do
-                    echo "nameserver ${icg_ns}" >> "${target_file}"
+                for dns_ns in ${dns_server_ip[*]} ; do
+                    echo "nameserver ${dns_ns}" >> "${target_file}"
                 done
 
                 # Now add ICG searching capability to DJBDNS (needed later)
-                for icg_dom in ${icg_domain[*]} ; do
-                    target_file="${ndjbdns_dir}/servers/${icg_dom}"
+                for dns_dom in ${dns_domain[*]} ; do
+                    target_file="${ndjbdns_dir}/servers/${dns_dom}"
 
                     if [ -e "${target_file}" ]; then
                         rm "${target_file}"
                     fi
 
-                    for icg_ns in ${icg_dns[*]} ; do
-                        echo "${icg_ns}" >> "${target_file}"
+                    for dns_ns in ${dns_server_ip[*]} ; do
+                        echo "${dns_ns}" >> "${target_file}"
                     done
 
                 done
 
                 # Setup for SCM repo checkout
                 working_dir="/var/git/repo"
-                #scm_user="svcbambdev"
-                scm_host="stash"
-                scm_port="7999"
-                scm_path="dns"
-                scm_repo="lab.ingram.io"
+                scm_host="<scm host>"
+                scm_port="<scm port>"
+                scm_path="<scm namespace>"
+                scm_repo="<repo name>"
         
+                # TODO: fix for github
                 if [ "${scm_user}" != "" ]; then
                     scm_url="ssh://${scm_user}@${scm_host}:${scm_prt}/${scm_path}/${scm_repo}.git"
                 else

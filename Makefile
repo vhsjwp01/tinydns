@@ -1,5 +1,5 @@
-REGISTRY_SERVER      = lvicdockregp01.ingramcontent.com
-REGISTRY_NAMESPACE   = ingramcontent
+REGISTRY_SERVER      = <docker registry server hostname>
+REGISTRY_NAMESPACE   = <docker namespace>
 IMAGE_NAME           = tinydns
 IMAGE_TAG            = $(shell git branch | egrep "^\*" | awk '{print $$NF}')
 REPO_DISTRO          = OracleServer
